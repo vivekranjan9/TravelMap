@@ -1,17 +1,67 @@
-// Create the map
+// ===============================
+// TravelMap v2.0
+// Google Earth Style
+// ===============================
 
-var map = L.map('map').setView([22.9734,78.6569],5);
+// Paste YOUR token below
+Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIwZjQ2NzhlMC1jNzJjLTQ1MzgtYmNkOS1iZmY2MjY0MDliN2UiLCJpZCI6NDUwNDk4LCJpc3MiOiJodHRwczovL2FwaS5jZXNpdW0uY29tIiwiYXVkIjoidW5kZWZpbmVkX2RlZmF1bHQiLCJpYXQiOjE3ODI3NTg1OTZ9.AXq0WsSeJ1Ise1sdavCwqX5tewErhntMHciAJUOkcGU";
 
-// Satellite Layer
+// Create Viewer
+const viewer = new Cesium.Viewer("cesiumContainer", {
 
-L.tileLayer(
+    animation: false,
 
-'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    timeline: false,
 
-{
+    sceneModePicker: false,
 
-attribution:'&copy; Esri'
+    homeButton: false,
 
-}
+    fullscreenButton: true,
 
-).addTo(map);
+    geocoder: false,
+
+    navigationHelpButton: false,
+
+    baseLayerPicker: true,
+
+    terrain: Cesium.Terrain.fromWorldTerrain()
+
+});
+
+// Hide Cesium Credits (we'll add proper attribution elsewhere later)
+viewer.cesiumWidget.creditContainer.style.display = "none";
+
+// Start from space
+viewer.camera.setView({
+
+    destination: Cesium.Cartesian3.fromDegrees(
+
+        0,
+        20,
+        35000000
+
+    )
+
+});
+
+// After 3 seconds fly to India
+setTimeout(() => {
+
+    viewer.camera.flyTo({
+
+        destination: Cesium.Cartesian3.fromDegrees(
+
+            78.9629,
+
+            20.5937,
+
+            6000000
+
+        ),
+
+        duration: 5
+
+    });
+
+}, 3000);
